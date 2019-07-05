@@ -5,6 +5,8 @@ import com.arangodb.ArangoDBAsync;
 import com.arangodb.ArangoDatabaseAsync;
 import com.arangodb.entity.BaseDocument;
 import com.arangodb.entity.DocumentCreateEntity;
+import com.arangodb.entity.MultiDocumentEntity;
+import com.arangodb.model.DocumentCreateOptions;
 import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -52,6 +54,20 @@ public class ArangoClientImpl implements ArangoClient {
                                Handler<AsyncResult<DocumentCreateEntity<BaseDocument>>> resultHandler) {
         final ArangoCollectionAsync collection = getCollection(collectionName);
         collection.insertDocument(document).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
+    }
+
+    @Override
+    public void insertDocument(String collectionName, BaseDocument document, DocumentCreateOptions options,
+                               Handler<AsyncResult<DocumentCreateEntity<BaseDocument>>> resultHandler) {
+        final ArangoCollectionAsync collection = getCollection(collectionName);
+        collection.insertDocument(document, options).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
+    }
+
+    @Override
+    public void insertDocuments(String collectionName, Collection<BaseDocument> values,
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentCreateEntity<BaseDocument>>>> resultHandler) {
+        final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
+        collectionAsync.insertDocuments(values).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
     }
 
     private <T, R> BiConsumer<? super T, ? super Throwable> convertCallBack(Handler<AsyncResult<R>> resultHandler,
