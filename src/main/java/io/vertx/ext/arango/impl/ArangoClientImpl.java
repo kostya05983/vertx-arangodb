@@ -3,9 +3,7 @@ package io.vertx.ext.arango.impl;
 import com.arangodb.ArangoCollectionAsync;
 import com.arangodb.ArangoDBAsync;
 import com.arangodb.ArangoDatabaseAsync;
-import com.arangodb.entity.BaseDocument;
-import com.arangodb.entity.DocumentCreateEntity;
-import com.arangodb.entity.MultiDocumentEntity;
+import com.arangodb.entity.*;
 import com.arangodb.model.DocumentCreateOptions;
 import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
@@ -69,6 +67,14 @@ public class ArangoClientImpl implements ArangoClient {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync.insertDocuments(values).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
     }
+
+    @Override
+    public void importDocuments(String collectionName, Collection<BaseDocument> values,
+                                Handler<AsyncResult<DocumentImportEntity>> resultHandler) {
+        final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
+        collectionAsync.importDocuments(values).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
+    }
+
 
     private <T, R> BiConsumer<? super T, ? super Throwable> convertCallBack(Handler<AsyncResult<R>> resultHandler,
                                                                             Function<T, R> converter) {
