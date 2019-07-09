@@ -1,6 +1,7 @@
 package io.vertx.ext.arango;
 
 import com.arangodb.ArangoDatabase;
+import com.arangodb.ArangoDatabaseAsync;
 import com.arangodb.entity.*;
 import com.arangodb.model.*;
 import io.vertx.codegen.annotations.Fluent;
@@ -18,7 +19,7 @@ public interface ArangoClient<T> {
         return new ArangoClientImpl(vertx, config, dataSourceName);
     }
 
-    public ArangoDatabase db();
+    public ArangoDatabaseAsync db(String collection);
 
     public String name();
 
