@@ -73,5 +73,31 @@ public interface ArangoClient<T> {
     public void updateDocument(String collectionName, String key, T value,
                                Handler<AsyncResult<DocumentUpdateEntity<T>>> resultHandler);
 
+    @Fluent
+    public void updateDocument(String collectionName, String key, T value, DocumentUpdateOptions options,
+                               Handler<AsyncResult<DocumentUpdateEntity<T>>> resultHandler);
 
+    @Fluent
+    public void updateDocuments(String collectionName, Collection<T> values,
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentUpdateEntity>>> resultHandler);
+
+    @Fluent
+    public void updateDocuments(String collectionName, Collection<T> values, DocumentUpdateOptions options,
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentUpdateEntity<T>>>> resultHandler);
+
+    @Fluent
+    public void deleteDocument(String collectionName, String key, Handler<AsyncResult<Void>> resultHandler);
+
+    @Fluent
+    public void deleteDocument(String collectionName, String key, Class<T> type, DocumentDeleteOptions options,
+                               Handler<AsyncResult<DocumentDeleteEntity<T>>> resultHandler);
+
+    @Fluent
+    public void deleteDocuments(String collectionName, Collection<?> values,
+                                Handler<MultiDocumentEntity<DocumentDeleteEntity<Void>>> resultHandler);
+
+    @Fluent
+    public void deleteDocuments(String collectionName, Collection<?> values, Class<T> type,
+                                DocumentDeleteOptions options,
+                                Handler<MultiDocumentEntity<DocumentDeleteEntity<T>>> resultHandler);
 }
