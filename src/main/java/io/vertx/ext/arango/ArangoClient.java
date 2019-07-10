@@ -1,6 +1,5 @@
 package io.vertx.ext.arango;
 
-import com.arangodb.ArangoDatabase;
 import com.arangodb.ArangoDatabaseAsync;
 import com.arangodb.entity.*;
 import com.arangodb.model.*;
@@ -26,11 +25,9 @@ public interface ArangoClient<T> {
     @Fluent
     public void insertDocument(String collectionName, T document,
                                Handler<AsyncResult<DocumentCreateEntity<T>>> resultHandler);
-
     @Fluent
     public void insertDocument(String collectionName, T document, DocumentCreateOptions options,
                                Handler<AsyncResult<DocumentCreateEntity<T>>> resultHandler);
-
 
     @Fluent
     public void insertDocuments(String collectionName, Collection<T> values,

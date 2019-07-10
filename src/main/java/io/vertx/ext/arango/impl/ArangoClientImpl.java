@@ -119,7 +119,8 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     @Override
     public void getDocuments(String collectionName, Collection<String> keys, Class<T> type,
                              Handler<AsyncResult<MultiDocumentEntity<T>>> resultHandler) {
-
+        final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
+        collectionAsync.getDocuments(keys, type).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
     }
 
     @Override
