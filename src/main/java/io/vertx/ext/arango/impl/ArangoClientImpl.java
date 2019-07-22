@@ -176,7 +176,7 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
 
     @Override
     public void updateDocuments(String collectionName, Collection<T> values,
-                                Handler<AsyncResult<MultiDocumentEntity<DocumentUpdateEntity>>> resultHandler) {
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentUpdateEntity<T>>>> resultHandler) {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync.updateDocuments(values).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
     }
@@ -189,9 +189,9 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     }
 
     @Override
-    public void deleteDocument(String collectionName, String key, Handler<AsyncResult<Void>> resultHandler) {
+    public void deleteDocument(String collectionName, String key, Handler<AsyncResult<DocumentDeleteEntity<Void>>> resultHandler) {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
-        collectionAsync.deleteDocument(key).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
+        collectionAsync.deleteDocument(key).whenCompleteAsync(convertCallBack(resultHandler, wr->wr));
     }
 
     @Override
@@ -203,7 +203,7 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
 
     @Override
     public void deleteDocuments(String collectionName, Collection<?> values,
-                                Handler<MultiDocumentEntity<DocumentDeleteEntity<Void>>> resultHandler) {
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentDeleteEntity<Void>>>> resultHandler) {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync.deleteDocuments(values).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
     }
@@ -211,7 +211,7 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     @Override
     public void deleteDocuments(String collectionName, Collection<?> values, Class<T> type,
                                 DocumentDeleteOptions options,
-                                Handler<MultiDocumentEntity<DocumentDeleteEntity<T>>> resultHandler) {
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentDeleteEntity<T>>>> resultHandler) {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync
                 .deleteDocuments(values, type, options)
@@ -238,7 +238,7 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     }
 
     @Override
-    public void deleteIndex(String collectionName, String id, Handler<AsyncResult<IndexEntity>> resultHandler) {
+    public void deleteIndex(String collectionName, String id, Handler<AsyncResult<String>> resultHandler) {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync.deleteIndex(id).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
     }
@@ -285,7 +285,7 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     }
 
     @Override
-    public void getIndexes(String collectionName, Handler<AsyncResult<IndexEntity>> resultHandler) {
+    public void getIndexes(String collectionName, Handler<AsyncResult<Collection<IndexEntity>>> resultHandler) {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync.getIndexes().whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
     }
@@ -358,7 +358,7 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     }
 
     @Override
-    public void changeProperties(String collectionName, CollectionPropertiesEntity options,
+    public void changeProperties(String collectionName, CollectionPropertiesOptions options,
                                  Handler<AsyncResult<CollectionPropertiesEntity>> resultHandler) {
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync.changeProperties(options).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));

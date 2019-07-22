@@ -65,22 +65,22 @@ public interface ArangoClient<T> {
                                Handler<AsyncResult<DocumentUpdateEntity<T>>> resultHandler);
 
     public void updateDocuments(String collectionName, Collection<T> values,
-                                Handler<AsyncResult<MultiDocumentEntity<DocumentUpdateEntity>>> resultHandler);
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentUpdateEntity<T>>>> resultHandler);
 
     public void updateDocuments(String collectionName, Collection<T> values, DocumentUpdateOptions options,
                                 Handler<AsyncResult<MultiDocumentEntity<DocumentUpdateEntity<T>>>> resultHandler);
 
-    public void deleteDocument(String collectionName, String key, Handler<AsyncResult<Void>> resultHandler);
+    public void deleteDocument(String collectionName, String key, Handler<AsyncResult<DocumentDeleteEntity<Void>>> resultHandler);
 
     public void deleteDocument(String collectionName, String key, Class<T> type, DocumentDeleteOptions options,
                                Handler<AsyncResult<DocumentDeleteEntity<T>>> resultHandler);
 
     public void deleteDocuments(String collectionName, Collection<?> values,
-                                Handler<MultiDocumentEntity<DocumentDeleteEntity<Void>>> resultHandler);
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentDeleteEntity<Void>>>> resultHandler);
 
     public void deleteDocuments(String collectionName, Collection<?> values, Class<T> type,
                                 DocumentDeleteOptions options,
-                                Handler<MultiDocumentEntity<DocumentDeleteEntity<T>>> resultHandler);
+                                Handler<AsyncResult<MultiDocumentEntity<DocumentDeleteEntity<T>>>> resultHandler);
 
     public void documentExists(String collectionName, String key, Handler<AsyncResult<Boolean>> resultHandler);
 
@@ -89,7 +89,7 @@ public interface ArangoClient<T> {
 
     public void getIndex(String collectionName, String id, Handler<AsyncResult<IndexEntity>> resultHandler);
 
-    public void deleteIndex(String collectionName, String id, Handler<AsyncResult<IndexEntity>> resultHandler);
+    public void deleteIndex(String collectionName, String id, Handler<AsyncResult<String>> resultHandler);
 
     public void ensureHashIndex(String collectionName, Iterable<String> fields, HashIndexOptions options,
                                 Handler<AsyncResult<IndexEntity>> resultHandler);
@@ -106,7 +106,7 @@ public interface ArangoClient<T> {
     public void ensureFulltextIndex(String collectionName, Iterable<String> fields, FulltextIndexOptions options,
                                     Handler<AsyncResult<IndexEntity>> resultHandler);
 
-    public void getIndexes(String collectionName, Handler<AsyncResult<IndexEntity>> resultHandler);
+    public void getIndexes(String collectionName, Handler<AsyncResult<Collection<IndexEntity>>> resultHandler);
 
     public void exists(String collectionName, Handler<AsyncResult<Boolean>> resultHandler);
 
@@ -138,7 +138,7 @@ public interface ArangoClient<T> {
     public void getProperties(String collectionName, Handler<AsyncResult<CollectionPropertiesEntity>> resultHandler);
 
     
-    public void changeProperties(String collectionName, CollectionPropertiesEntity options,
+    public void changeProperties(String collectionName, CollectionPropertiesOptions options,
                                  Handler<AsyncResult<CollectionPropertiesEntity>> resultHandler);
 
     
