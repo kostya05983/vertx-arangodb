@@ -21,6 +21,14 @@ public interface ArangoClient<T> {
 
     public String name();
 
+    /**
+     * Creates a new document from the given document, unless there is already a document with the _key given. If no
+     * _key is given, a new unique _key is generated automatically.
+     *
+     * @param document
+     *            A representation of a single document (POJO, VPackSlice or String for Json)
+     * @return information about the document
+     */
     public void insertDocument(String collectionName, T document,
                                Handler<AsyncResult<DocumentCreateEntity<T>>> resultHandler);
     public void insertDocument(String collectionName, T document, DocumentCreateOptions options,
