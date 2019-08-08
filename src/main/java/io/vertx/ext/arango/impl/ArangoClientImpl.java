@@ -22,13 +22,19 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     private static ArangoDBAsync arangoDB;
     private static ArangoDatabaseAsync db;
 
-    public ArangoClientImpl(Vertx vertx, JsonObject config, String dataSourceName) throws Exception {
+    public ArangoClientImpl(Vertx vertx, JsonObject config, String dataSourceName,
+                            Handler<AsyncResult<Void>> resultHandler) {
         Objects.requireNonNull(vertx);
         Objects.requireNonNull(config);
         Objects.requireNonNull(dataSourceName);
         this.vertx = vertx;
         arangoDB = new ArangoDBAsync.Builder().build();
-        arangoDB.db(dataSourceName).drop().get();
+        try {
+            arangoDB.db(dataSourceName).drop().get();
+            resultHandler.handle(Future.succeededFuture());
+        } catch(Exception e) {
+            resultHandler.handle(Future.failedFuture(e));
+        }
         db = arangoDB.db(dataSourceName);
     }
 
