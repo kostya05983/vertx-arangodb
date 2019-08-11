@@ -5,3 +5,5 @@ jdk:
   - openjdk11
 script: mvn clean install
 
+services:
+  - docker
