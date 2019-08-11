@@ -13,9 +13,8 @@ import java.util.*;
 
 public interface ArangoClient<T> {
 
-    static ArangoClient createNonShared(Vertx vertx, JsonObject config, String dataSourceName,
-                                        Handler<AsyncResult<Void>> resultHandler) {
-        return new ArangoClientImpl(vertx, config, dataSourceName, resultHandler);
+    static ArangoClient createNonShared(Vertx vertx, JsonObject config, String dataSourceName) {
+        return new ArangoClientImpl(vertx, config, dataSourceName);
     }
 
     public ArangoDatabaseAsync db(String collection);

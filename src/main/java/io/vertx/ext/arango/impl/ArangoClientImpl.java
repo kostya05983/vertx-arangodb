@@ -1,7 +1,18 @@
 package io.vertx.ext.arango.impl;
 
-import com.arangodb.*;
-import com.arangodb.entity.*;
+import com.arangodb.ArangoCollectionAsync;
+import com.arangodb.ArangoDBAsync;
+import com.arangodb.ArangoDatabaseAsync;
+import com.arangodb.entity.DocumentCreateEntity;
+import com.arangodb.entity.DocumentUpdateEntity;
+import com.arangodb.entity.DocumentImportEntity;
+import com.arangodb.entity.MultiDocumentEntity;
+import com.arangodb.entity.IndexEntity;
+import com.arangodb.entity.CollectionEntity;
+import com.arangodb.entity.CollectionPropertiesEntity;
+import com.arangodb.entity.DocumentDeleteEntity;
+import com.arangodb.entity.CollectionRevisionEntity;
+import com.arangodb.entity.Permissions;
 import com.arangodb.model.*;
 import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
@@ -10,8 +21,14 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.arango.ArangoClient;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+/**
+ * @param <T>
+ * @author kostya05983
+ */
 
 public class ArangoClientImpl<T> implements ArangoClient<T> {
 
@@ -22,19 +39,13 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     private static ArangoDBAsync arangoDB;
     private static ArangoDatabaseAsync db;
 
-    public ArangoClientImpl(Vertx vertx, JsonObject config, String dataSourceName,
-                            Handler<AsyncResult<Void>> resultHandler) {
+    public ArangoClientImpl(Vertx vertx, JsonObject config, String dataSourceName) {
         Objects.requireNonNull(vertx);
         Objects.requireNonNull(config);
         Objects.requireNonNull(dataSourceName);
         this.vertx = vertx;
-        arangoDB = new ArangoDBAsync.Builder().build();
-        try {
-            arangoDB.db(dataSourceName).drop().get();
-            resultHandler.handle(Future.succeededFuture());
-        } catch(Exception e) {
-            resultHandler.handle(Future.failedFuture(e));
-        }
+        arangoDB = new ArangoDBAsync.Builder()
+                .host(config.getString("host"), config.getInteger("port")).build();
         db = arangoDB.db(dataSourceName);
     }
 

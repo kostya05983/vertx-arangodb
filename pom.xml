@@ -41,11 +41,15 @@
             <version>${arango.async.version}</version>
         </dependency>
         <dependency>
-            <!-- declare this dependency to force flapdoodle to use this one. It is the version used by vert.x -->
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.21</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.11.2</version>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
@@ -64,15 +68,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-junit5</artifactId>
             <scope>test</scope>
-            <version>4.12</version>
         </dependency>
         <dependency>
-            <groupId>pl.pragmatists</groupId>
-            <artifactId>JUnitParams</artifactId>
-            <version>1.1.1</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.5.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
