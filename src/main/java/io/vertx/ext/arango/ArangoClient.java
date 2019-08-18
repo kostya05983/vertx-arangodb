@@ -25,6 +25,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.arango.impl.ArangoClientImpl;
 import io.vertx.ext.arango.impl.config.ArangoClientSettingsParser;
 
 import javax.net.ssl.SSLContext;
@@ -33,15 +34,14 @@ import java.util.Collection;
 
 public interface ArangoClient<T> {
 
-    static ArangoBuilderDecorator createNonShared(Vertx vertx, JsonObject config, String dataSouceName) {
-        return null;
+    static ArangoClient createNonShared(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String dataSouceName) {
+        return new ArangoClientImpl(vertx, arangoBuilderDecorator.build(), dataSouceName);
     }
 
-
-    public static class ArangoBuilderDecorator {
+    class ArangoBuilderDecorator {
         private final ArangoDBAsync.Builder builder;
 
-        public ArangoBuilderDecorator(Vertx vertx, JsonObject config, String dataSourceName) {
+        ArangoBuilderDecorator(JsonObject config) {
             final ArangoClientSettingsParser parser = new ArangoClientSettingsParser();
             builder = parser.parse(config);
         }
@@ -129,6 +129,10 @@ public interface ArangoClient<T> {
         ArangoBuilderDecorator deserializer(final ArangoDeserializer deserializer) {
             builder.setDeserializer(deserializer);
             return this;
+        }
+
+        ArangoDBAsync build() {
+            return builder.build();
         }
     }
 
