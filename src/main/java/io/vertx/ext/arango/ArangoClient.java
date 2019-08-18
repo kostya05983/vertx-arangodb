@@ -1,15 +1,37 @@
 package io.vertx.ext.arango;
 
 import com.arangodb.ArangoDatabaseAsync;
-import com.arangodb.entity.*;
-import com.arangodb.model.*;
+import com.arangodb.entity.DocumentCreateEntity;
+import com.arangodb.entity.DocumentImportEntity;
+import com.arangodb.entity.DocumentDeleteEntity;
+import com.arangodb.entity.DocumentUpdateEntity;
+import com.arangodb.entity.MultiDocumentEntity;
+import com.arangodb.entity.CollectionEntity;
+import com.arangodb.entity.CollectionRevisionEntity;
+import com.arangodb.entity.CollectionPropertiesEntity;
+import com.arangodb.entity.IndexEntity;
+import com.arangodb.entity.Permissions;
+import com.arangodb.model.DocumentCreateOptions;
+import com.arangodb.model.DocumentDeleteOptions;
+import com.arangodb.model.DocumentReadOptions;
+import com.arangodb.model.DocumentReplaceOptions;
+import com.arangodb.model.DocumentUpdateOptions;
+import com.arangodb.model.DocumentExistsOptions;
+import com.arangodb.model.DocumentImportOptions;
+import com.arangodb.model.GeoIndexOptions;
+import com.arangodb.model.SkiplistIndexOptions;
+import com.arangodb.model.HashIndexOptions;
+import com.arangodb.model.FulltextIndexOptions;
+import com.arangodb.model.PersistentIndexOptions;
+import com.arangodb.model.CollectionCreateOptions;
+import com.arangodb.model.CollectionPropertiesOptions;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.arango.impl.ArangoClientImpl;
 
-import java.util.*;
+import java.util.Collection;
 
 public interface ArangoClient<T> {
 
