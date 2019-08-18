@@ -56,13 +56,12 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
     private static ArangoDBAsync arangoDB;
     private static ArangoDatabaseAsync db;
 
-    public ArangoClientImpl(Vertx vertx, JsonObject config, String dataSourceName) {
+    public ArangoClientImpl(Vertx vertx, ArangoDBAsync arangoDBAsync, String dataSourceName) {
         Objects.requireNonNull(vertx);
-        Objects.requireNonNull(config);
+        Objects.requireNonNull(arangoDBAsync);
         Objects.requireNonNull(dataSourceName);
         this.vertx = vertx;
-        arangoDB = new ArangoDBAsync.Builder()
-                .host(config.getString("host"), config.getInteger("port")).build();
+        arangoDB = arangoDBAsync;
         db = arangoDB.db(dataSourceName);
     }
 
