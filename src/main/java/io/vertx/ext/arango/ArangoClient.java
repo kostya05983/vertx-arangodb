@@ -68,7 +68,13 @@ public interface ArangoClient<T> {
             builder = parser.parse(config);
         }
 
-
+        /**
+         * Sets the SSL context to be used.
+         *
+         * @param sslContext
+         *            SSL context to be used
+         * @return {@link ArangoClient.ArangoBuilderDecorator}
+         */
         ArangoBuilderDecorator sslContext(final SSLContext sslContext) {
             builder.sslContext(sslContext);
             return this;
