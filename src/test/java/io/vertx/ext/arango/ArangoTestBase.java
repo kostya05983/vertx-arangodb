@@ -74,7 +74,6 @@ public class ArangoTestBase {
     @AfterAll
     public void tearDown(VertxTestContext context) {
         arangoContainer.stop();
-        context.completeNow();
-        //TODO add close method
+        arangoClient.close(voidAsyncResult -> context.completeNow());
     }
 }

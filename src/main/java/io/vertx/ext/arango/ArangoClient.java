@@ -40,6 +40,7 @@ import com.arangodb.velocypack.VPackAnnotationFieldFilter;
 import com.arangodb.velocypack.VPackModule;
 import com.arangodb.velocypack.VPackParserModule;
 import io.vertx.core.AsyncResult;
+import io.vertx.core.Closeable;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -54,7 +55,7 @@ import java.util.Collection;
  * @author kostya05983
  * @param <T> - the type of documents to work with
  */
-public interface ArangoClient<T> {
+public interface ArangoClient<T> extends Closeable {
 
     static ArangoClient createNonShared(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String dataSouceName) {
         return new ArangoClientImpl(vertx, arangoBuilderDecorator.build(), dataSouceName);
