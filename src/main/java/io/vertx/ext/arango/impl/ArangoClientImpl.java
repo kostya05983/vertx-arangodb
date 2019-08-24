@@ -27,14 +27,14 @@ import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.CollectionCreateOptions;
 import com.arangodb.model.CollectionPropertiesOptions;
+import io.vertx.core.Closeable;
 import io.vertx.core.Vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
-import io.vertx.core.Context;
 import io.vertx.core.Future;
+import io.vertx.core.Context;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.arango.ArangoClient;
 
 import java.util.Collection;
@@ -47,7 +47,7 @@ import java.util.function.Function;
  * @author kostya05983
  */
 
-public class ArangoClientImpl<T> implements ArangoClient<T> {
+public class ArangoClientImpl<T> implements ArangoClient<T>, Closeable {
 
     private static final Logger log = LoggerFactory.getLogger(ArangoClientImpl.class);
 
@@ -577,5 +577,11 @@ public class ArangoClientImpl<T> implements ArangoClient<T> {
 
         final ArangoCollectionAsync collectionAsync = getCollection(collectionName);
         collectionAsync.resetAccess(user).whenCompleteAsync(convertCallBack(resultHandler, wr -> wr));
+    }
+
+    @Override
+    public void close(Handler<AsyncResult<Void>> handler) {
+        arangoDB.shutdown();
+        handler.handle(Future.succeededFuture());
     }
 }

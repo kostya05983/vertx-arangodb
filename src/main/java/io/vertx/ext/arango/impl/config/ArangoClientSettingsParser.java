@@ -1,11 +1,8 @@
 package io.vertx.ext.arango.impl.config;
 
 import com.arangodb.ArangoDBAsync;
-import com.arangodb.entity.LoadBalancingStrategy;
 import io.vertx.core.json.JsonObject;
-import org.jetbrains.annotations.Nullable;
 
-import javax.net.ssl.SSLContext;
 
 /**
  * @author kostya05983
