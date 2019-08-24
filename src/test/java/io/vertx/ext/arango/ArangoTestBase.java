@@ -2,6 +2,7 @@ package io.vertx.ext.arango;
 
 import com.arangodb.ArangoDBAsync;
 import com.arangodb.ArangoDatabaseAsync;
+import com.arangodb.entity.BaseDocument;
 import com.arangodb.entity.CollectionEntity;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @ExtendWith(VertxExtension.class)
 public class ArangoTestBase {
 
-    ArangoClient arangoClient;
+    ArangoClient<BaseDocument> arangoClient;
     final static String COLLECTION_NAME = "collection";
 
     private final static String DB_NAME = "db";

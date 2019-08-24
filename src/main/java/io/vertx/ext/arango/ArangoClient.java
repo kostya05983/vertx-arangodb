@@ -2,6 +2,7 @@ package io.vertx.ext.arango;
 
 import com.arangodb.ArangoDBAsync;
 import com.arangodb.ArangoDatabaseAsync;
+import com.arangodb.entity.BaseDocument;
 import com.arangodb.entity.DocumentCreateEntity;
 import com.arangodb.entity.DocumentUpdateEntity;
 import com.arangodb.entity.DocumentDeleteEntity;
@@ -29,6 +30,7 @@ import com.arangodb.model.CollectionCreateOptions;
 import com.arangodb.model.CollectionPropertiesOptions;
 import com.arangodb.util.ArangoDeserializer;
 import com.arangodb.util.ArangoSerialization;
+import com.arangodb.velocypack.VPack;
 import com.arangodb.velocypack.VPackDeserializer;
 import com.arangodb.velocypack.VPackSerializer;
 import com.arangodb.velocypack.VPackInstanceCreator;
@@ -57,8 +59,16 @@ import java.util.Collection;
  */
 public interface ArangoClient<T> extends Closeable {
 
-    static ArangoClient createNonShared(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String dataSouceName) {
-        return new ArangoClientImpl(vertx, arangoBuilderDecorator.build(), dataSouceName);
+    static ArangoClient createNonShared(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String dataSourceName) {
+        return new ArangoClientImpl(vertx, arangoBuilderDecorator.build(), dataSourceName);
+    }
+
+    static ArangoClient<BaseDocument> createNotSharedBaseDocument(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
+        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
+    }
+
+    static ArangoClient<VPack> createNotSharedVPack(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
+        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
     }
 
     class ArangoBuilderDecorator {
