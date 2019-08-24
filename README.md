@@ -10,7 +10,7 @@ JsonObject config = new JsonObject();
 config.put("host", "localhost");
 config.put("port", 8529);
 ArangoClient.ArangoBuilderDecorator arangoBuilderDecorator = new ArangoClient.ArangoBuilderDecorator(config);
-ArangoClient arangoClient = ArangoClient.createNonShared(vertx, arangoBuilderDecorator, DB_NAME);        
+ArangoClient<BaseDocument> arangoClient = ArangoClient.createNonShared(vertx, arangoBuilderDecorator, DB_NAME);        
 ```
 
 
