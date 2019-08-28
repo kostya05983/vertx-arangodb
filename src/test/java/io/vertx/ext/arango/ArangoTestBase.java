@@ -48,8 +48,8 @@ public class ArangoTestBase {
         JsonObject config = new JsonObject();
         config.put("host", "localhost");
         config.put("port", 8529);
-        final ArangoClient.ArangoBuilderDecorator arangoBuilderDecorator = new ArangoClient.ArangoBuilderDecorator(config);
-        arangoClient = ArangoClient.createNonShared(vertx, arangoBuilderDecorator, DB_NAME);
+//        final ArangoClient.ArangoBuilderDecorator arangoBuilderDecorator = new ArangoClient.ArangoBuilderDecorator(config);
+        arangoClient = ArangoClient.createNonShared(vertx, config, DB_NAME);
         try {
             createCollection();
             context.completeNow();

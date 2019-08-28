@@ -1,0 +1,30 @@
+= Cheatsheets
+
+[[DocumentInsertResult]]
+== DocumentInsertResult
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[newObject]]`@newObject`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
+|[[oldObject]]`@oldObject`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
+|===
+
+[[VertxBaseDocument]]
+== VertxBaseDocument
+
+++++
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[id]]`@id`|`String`|-
+|[[key]]`@key`|`String`|-
+|[[revision]]`@revision`|`String`|-
+|===
+

@@ -1,13 +1,10 @@
 package io.vertx.ext.arango;
 
-import com.arangodb.ArangoDBAsync;
 import com.arangodb.ArangoDatabaseAsync;
-import com.arangodb.entity.BaseDocument;
 import com.arangodb.entity.DocumentCreateEntity;
 import com.arangodb.entity.DocumentUpdateEntity;
 import com.arangodb.entity.DocumentDeleteEntity;
 import com.arangodb.entity.DocumentImportEntity;
-import com.arangodb.entity.LoadBalancingStrategy;
 import com.arangodb.entity.Permissions;
 import com.arangodb.entity.CollectionPropertiesEntity;
 import com.arangodb.entity.CollectionRevisionEntity;
@@ -28,19 +25,8 @@ import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.CollectionCreateOptions;
 import com.arangodb.model.CollectionPropertiesOptions;
-import com.arangodb.util.ArangoDeserializer;
-import com.arangodb.util.ArangoSerialization;
-import com.arangodb.velocypack.VPack;
-import com.arangodb.velocypack.VPackDeserializer;
-import com.arangodb.velocypack.VPackSerializer;
-import com.arangodb.velocypack.VPackInstanceCreator;
-import com.arangodb.velocypack.VPackJsonDeserializer;
-import com.arangodb.velocypack.VPackJsonSerializer;
-import com.arangodb.velocypack.ValueType;
-import com.arangodb.velocypack.VPackAnnotationFieldNaming;
-import com.arangodb.velocypack.VPackAnnotationFieldFilter;
-import com.arangodb.velocypack.VPackModule;
-import com.arangodb.velocypack.VPackParserModule;
+import io.vertx.codegen.annotations.Fluent;
+import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Closeable;
 import io.vertx.core.Handler;
@@ -49,329 +35,27 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.arango.impl.ArangoClientImpl;
 import io.vertx.ext.arango.impl.config.ArangoClientSettingsParser;
 
-import javax.net.ssl.SSLContext;
-import java.lang.annotation.Annotation;
 import java.util.Collection;
 
 /**
- * @author kostya05983
  * @param <T> - the type of documents to work with
+ * @author kostya05983
  */
 public interface ArangoClient<T> extends Closeable {
 
-    static ArangoClient createNonShared(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String dataSourceName) {
-        return new ArangoClientImpl(vertx, arangoBuilderDecorator.build(), dataSourceName);
+    static ArangoClient createNonShared(Vertx vertx, JsonObject arangoBuilderDecorator, String dataSourceName) {
+        final ArangoClientSettingsParser parser = new ArangoClientSettingsParser();
+
+        return new ArangoClientImpl(vertx, parser.parse(arangoBuilderDecorator).build(), dataSourceName);
     }
 
-    static ArangoClient<BaseDocument> createNotSharedBaseDocument(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
-        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
-    }
-
-    static ArangoClient<VPack> createNotSharedVPack(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
-        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
-    }
-
-    class ArangoBuilderDecorator {
-        private final ArangoDBAsync.Builder builder;
-
-        ArangoBuilderDecorator(JsonObject config) {
-            final ArangoClientSettingsParser parser = new ArangoClientSettingsParser();
-            builder = parser.parse(config);
-        }
-
-        /**
-         * Sets the SSL context to be used.
-         *
-         * @param sslContext
-         *            SSL context to be used
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator sslContext(final SSLContext sslContext) {
-            builder.sslContext(sslContext);
-            return this;
-        }
-
-        /**
-         * Sets the load balancing strategy to be used in an ArangoDB cluster setup.
-         *
-         * @param loadBalancingStrategy the load balancing strategy to be used (default: {@link LoadBalancingStrategy#NONE}
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator loadBalancingStrategy(final LoadBalancingStrategy loadBalancingStrategy) {
-            builder.loadBalancingStrategy(loadBalancingStrategy);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackSerializer} for a specific type to be used within the internal serialization
-         * process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param clazz      the type the serializer should be registered for
-         * @param serializer serializer to register
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <T> ArangoBuilderDecorator registerSerializer(final Class<T> clazz, final VPackSerializer<T> serializer) {
-            builder.registerSerializer(clazz, serializer);
-            return this;
-        }
-
-        /**
-         * Register a special serializer for a member class which can only be identified by its enclosing class.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param clazz      the type of the enclosing class
-         * @param serializer serializer to register
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <T> ArangoBuilderDecorator registerEnclosingSerializer(final Class<T> clazz, final VPackSerializer<T> serializer) {
-            builder.registerEnclosingSerializer(clazz, serializer);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackDeserializer} for a specific type to be used within the internal serialization
-         * process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param clazz        the type the serializer should be registered for
-         * @param deserializer
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <T> ArangoBuilderDecorator registerDeserializer(final Class<T> clazz, final VPackDeserializer<T> deserializer) {
-            builder.registerDeserializer(clazz, deserializer);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackInstanceCreator} for a specific type to be used within the internal
-         * serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param clazz   the type the instance creator should be registered for
-         * @param creator
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <T> ArangoBuilderDecorator registerInstanceCreator(final Class<T> clazz, final VPackInstanceCreator<T> creator) {
-            builder.registerInstanceCreator(clazz, creator);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackJsonDeserializer} for a specific type to be used within the internal
-         * serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param type         the type the serializer should be registered for
-         * @param deserializer
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator registerJsonDeserializer(final ValueType type, final VPackJsonDeserializer deserializer) {
-            builder.registerJsonDeserializer(type, deserializer);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackJsonDeserializer} for a specific type and attribute name to be used within the
-         * internal serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param attribute
-         * @param type         the type the serializer should be registered for
-         * @param deserializer
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator registerJsonDeserializer(final String attribute, final ValueType type, final VPackJsonDeserializer deserializer) {
-            builder.registerJsonDeserializer(attribute, type, deserializer);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackJsonSerializer} for a specific type to be used within the internal
-         * serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param clazz
-         *            the type the serializer should be registered for
-         * @param serializer
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <T> ArangoBuilderDecorator registerJsonSerializer(final Class<T> clazz, final VPackJsonSerializer<T> serializer) {
-            builder.registerJsonSerializer(clazz, serializer);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackJsonSerializer} for a specific type and attribute name to be used within the
-         * internal serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param attribute
-         * @param clazz      the type the serializer should be registered for
-         * @param serializer
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <T> ArangoBuilderDecorator registerJsonSerializer(final String attribute, final Class<T> clazz, final VPackJsonSerializer<T> serializer) {
-            builder.registerJsonSerializer(attribute, clazz, serializer);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackAnnotationFieldFilter} for a specific type to be used within the internal
-         * serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param type        the type the serializer should be registered for
-         * @param fieldFilter
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <A extends Annotation> ArangoBuilderDecorator annotationFieldFilter(final Class<A> type, final VPackAnnotationFieldFilter<A> fieldFilter) {
-            builder.annotationFieldFilter(type, fieldFilter);
-            return this;
-        }
-
-        /**
-         * Register a custom {@link VPackAnnotationFieldNaming} for a specific type to be used within the internal
-         * serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param type        the type the serializer should be registered for
-         * @param fieldNaming
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        <A extends Annotation> ArangoBuilderDecorator annotationFieldNaming(final Class<A> type, final VPackAnnotationFieldNaming<A> fieldNaming) {
-            builder.annotationFieldNaming(type, fieldNaming);
-            return this;
-        }
-
-        /**
-         * Register a {@link VPackModule} to be used within the internal serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param module module to register
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator registerModule(final VPackModule module) {
-            builder.registerModule(module);
-            return this;
-        }
-
-        /**
-         * Register a list of {@link VPackModule} to be used within the internal serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param modules modules to register
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator registerModules(final VPackModule... modules) {
-            builder.registerModules(modules);
-            return this;
-        }
-
-        /**
-         * Register a {@link VPackParserModule} to be used within the internal serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param module module to register
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator registerJsonModule(final VPackParserModule module) {
-            builder.registerJsonModule(module);
-            return this;
-        }
-
-        /**
-         * Register a list of {@link VPackParserModule} to be used within the internal serialization process.
-         *
-         * <p>
-         * <strong>Attention:</strong>can not be used together with {@link #serializer(ArangoSerialization)}
-         * </p>
-         *
-         * @param modules modules to register
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator registerJsonModules(final VPackParserModule... modules) {
-            builder.registerJsonModules(modules);
-            return this;
-        }
-
-        /**
-         * Replace the built-in serializer/deserializer with the given one.
-         * <p>
-         * <br />
-         * <b>ATTENTION!:</b> Any registered custom serializer/deserializer or module will be ignored.
-         *
-         * @param serialization custom serializer/deserializer
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         */
-        ArangoBuilderDecorator serializer(final ArangoSerialization serialization) {
-            builder.serializer(serialization);
-            return this;
-        }
-
-        /**
-         * Replace the built-in deserializer with the given deserializer.
-         * <p>
-         * <br />
-         * <b>ATTENTION!:</b> Use at your own risk
-         *
-         * @param deserializer custom deserializer
-         * @return {@link ArangoClient.ArangoBuilderDecorator}
-         * @deprecated use {@link #serializer(ArangoSerialization)} instead
-         */
-        ArangoBuilderDecorator deserializer(final ArangoDeserializer deserializer) {
-            builder.setDeserializer(deserializer);
-            return this;
-        }
-
-        /**
-         * Build an instance of arangoDbAsync
-         *
-         * @return {@link ArangoDBAsync}
-         */
-        ArangoDBAsync build() {
-            return builder.build();
-        }
-    }
+//    static ArangoClient<BaseDocument> createNotSharedBaseDocument(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
+//        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
+//    }
+//
+//    static ArangoClient<VPack> createNotSharedVPack(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
+//        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
+//    }
 
     public ArangoDatabaseAsync db(String collection);
 
