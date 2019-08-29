@@ -28,6 +28,16 @@
 |[[revision]]`@revision`|`String`|-
 |===
 
+[[VertxCollection]]
+== VertxCollection
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|===
+
 [[VertxDocumentCreateOptions]]
 == VertxDocumentCreateOptions
 
@@ -41,5 +51,32 @@
 |[[returnOld]]`@returnOld`|`Boolean`|-
 |[[silent]]`@silent`|`Boolean`|-
 |[[waitForSync]]`@waitForSync`|`Boolean`|-
+|===
+
+[[VertxErrorEntity]]
+== VertxErrorEntity
+
+++++
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[code]]`@code`|`Number (int)`|-
+|[[errorMessage]]`@errorMessage`|`String`|-
+|[[errorNum]]`@errorNum`|`Number (int)`|-
+|[[exception]]`@exception`|`String`|-
+|===
+
+[[VertxMultiDocumentEntity]]
+== VertxMultiDocumentEntity
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
 |===
 
