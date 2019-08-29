@@ -28,3 +28,18 @@
 |[[revision]]`@revision`|`String`|-
 |===
 
+[[VertxDocumentCreateOptions]]
+== VertxDocumentCreateOptions
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[overwrite]]`@overwrite`|`Boolean`|-
+|[[returnNew]]`@returnNew`|`Boolean`|-
+|[[returnOld]]`@returnOld`|`Boolean`|-
+|[[silent]]`@silent`|`Boolean`|-
+|[[waitForSync]]`@waitForSync`|`Boolean`|-
+|===
+
