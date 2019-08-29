@@ -7,5 +7,7 @@ import io.vertx.core.Handler;
 @VertxGen
 public interface ArangoClientBaseDocument {
 
-    public void insertDocument(String collectionName, VertxBaseDocument test);
+    public void insertDocument(String collectionName, VertxBaseDocument baseDocument,
+                               Handler<AsyncResult<DocumentInsertResult>> resultHandler);
+
 }

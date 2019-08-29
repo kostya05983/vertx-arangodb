@@ -83,6 +83,19 @@ public class VertxBaseDocument {
         this.properties = properties;
     }
 
+    public JsonObject toJson() {
+        JsonObject json = new JsonObject();
+        json.put(ID, id);
+        json.put(KEY, key);
+        json.put(REVISION, revision);
+        JsonObject properties = new JsonObject();
+        for (Map.Entry<String, Object> entry : properties) {
+            properties.put(entry.getKey(), entry.getValue());
+        }
+        json.put(PROPERTIES, properties);
+        return json;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -49,14 +49,6 @@ public interface ArangoClient<T> extends Closeable {
         return new ArangoClientImpl(vertx, parser.parse(arangoBuilderDecorator).build(), dataSourceName);
     }
 
-//    static ArangoClient<BaseDocument> createNotSharedBaseDocument(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
-//        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
-//    }
-//
-//    static ArangoClient<VPack> createNotSharedVPack(Vertx vertx, ArangoBuilderDecorator arangoBuilderDecorator, String datasourceName) {
-//        return new ArangoClientImpl<>(vertx, arangoBuilderDecorator.build(), datasourceName);
-//    }
-
     public ArangoDatabaseAsync db(String collection);
 
     public String name();
