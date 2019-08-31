@@ -36,4 +36,8 @@ public interface ArangoClientBaseDocument {
 
     public void replaceDocument(String collectionName, String key, VertxBaseDocument document,
                                 Handler<AsyncResult<VertxDocumentUpdateEntity>> resultHandler);
+
+    public void replaceDocument(String collectionName, String key, VertxBaseDocument document,
+                                VertxDocumentReplaceOptions options,
+                                Handler<AsyncResult<VertxDocumentUpdateEntity>> resultHandler);
 }

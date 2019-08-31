@@ -99,6 +99,25 @@
 |[[ifNoneMatch]]`@ifNoneMatch`|`String`|-
 |===
 
+[[VertxDocumentReplaceOptions]]
+== VertxDocumentReplaceOptions
+
+++++
+++++
+'''
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[ifMatch]]`@ifMatch`|`String`|-
+|[[ignoreRevs]]`@ignoreRevs`|`Boolean`|-
+|[[returnNew]]`@returnNew`|`Boolean`|-
+|[[returnOld]]`@returnOld`|`Boolean`|-
+|[[silent]]`@silent`|`Boolean`|-
+|[[waitForSync]]`@waitForSync`|`Boolean`|-
+|===
+
 [[VertxDocumentUpdateEntity]]
 == VertxDocumentUpdateEntity
 
