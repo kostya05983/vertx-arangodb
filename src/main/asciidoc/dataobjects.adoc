@@ -85,6 +85,20 @@
 |[[waitForSync]]`@waitForSync`|`Boolean`|-
 |===
 
+[[VertxDocumentReadOptions]]
+== VertxDocumentReadOptions
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[allowDirtyRead]]`@allowDirtyRead`|`Boolean`|-
+|[[catchException]]`@catchException`|`Boolean`|-
+|[[ifMatch]]`@ifMatch`|`String`|-
+|[[ifNoneMatch]]`@ifNoneMatch`|`String`|-
+|===
+
 [[VertxErrorEntity]]
 == VertxErrorEntity
 

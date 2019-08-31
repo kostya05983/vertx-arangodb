@@ -22,4 +22,9 @@ public interface ArangoClientBaseDocument {
 
     public void importDocuments(String collectionName, VertxCollection values, VertxDocumentImportOptions options,
                                 Handler<AsyncResult<VertxDocumentImportEntity>> resultHandler);
+
+    public void getDocument(String collectionName, String key, Handler<VertxBaseDocument> resultHandler);
+
+    public void getDocument(String collectionName, String key, VertxDocumentReadOptions options,
+                            Handler<VertxBaseDocument> resultHandler);
 }
