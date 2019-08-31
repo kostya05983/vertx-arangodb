@@ -1,5 +1,6 @@
 package io.vertx.ext.arango;
 
+import com.arangodb.model.DocumentReadOptions;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
@@ -27,4 +28,11 @@ public interface ArangoClientBaseDocument {
 
     public void getDocument(String collectionName, String key, VertxDocumentReadOptions options,
                             Handler<VertxBaseDocument> resultHandler);
+
+    public void getDocuments(String collectionName, String key,
+                             Handler<AsyncResult<VertxMultiDocumentEntity>> resultHandler);
+
+    public void getDocuments(String collectionName, String key, VertxDocumentReadOptions options,
+                             Handler<AsyncResult<VertxMultiDocumentEntity>> resultHandler);
+
 }
