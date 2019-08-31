@@ -1,7 +1,6 @@
 package io.vertx.ext.arango;
 
 import io.vertx.codegen.annotations.DataObject;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 

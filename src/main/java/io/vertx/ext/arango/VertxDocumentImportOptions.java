@@ -1,6 +1,5 @@
 package io.vertx.ext.arango;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.json.JsonObject;
 
