@@ -13,7 +13,7 @@ public class VertxMultiDocumentEntity {
     private final static String DOCUMENTS = "documents";
     private final static String ERRORS = "errors";
 
-    private Collection<DocumentInsertResult> documents;
+    private Collection<VertxDocumentCreateEntity> documents;
     private Collection<VertxErrorEntity> errors;
 
     public VertxMultiDocumentEntity() {
@@ -23,7 +23,7 @@ public class VertxMultiDocumentEntity {
         JsonArray documentsArray = json.getJsonArray(DOCUMENTS);
         documents = new ArrayList<>();
         for (int i = 0; i < documentsArray.size(); i++) {
-            DocumentInsertResult insertResult = new DocumentInsertResult(documentsArray.getJsonObject(i));
+            VertxDocumentCreateEntity insertResult = new VertxDocumentCreateEntity(documentsArray.getJsonObject(i));
             documents.add(insertResult);
         }
 
@@ -36,11 +36,11 @@ public class VertxMultiDocumentEntity {
     }
 
 
-    public Collection<DocumentInsertResult> getDocuments() {
+    public Collection<VertxDocumentCreateEntity> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(Collection<DocumentInsertResult> documents) {
+    public void setDocuments(Collection<VertxDocumentCreateEntity> documents) {
         this.documents = documents;
     }
 
@@ -55,7 +55,7 @@ public class VertxMultiDocumentEntity {
     public JsonObject toJson() {
         JsonObject jsonObject = new JsonObject();
         JsonArray documentsArray = new JsonArray();
-        for (DocumentInsertResult result : documents) {
+        for (VertxDocumentCreateEntity result : documents) {
             documentsArray.add(result.toJson());
         }
         jsonObject.put(DOCUMENTS, documentsArray);

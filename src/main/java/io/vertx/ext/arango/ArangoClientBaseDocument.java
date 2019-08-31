@@ -1,6 +1,5 @@
 package io.vertx.ext.arango;
 
-import com.arangodb.model.DocumentReadOptions;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
@@ -10,10 +9,10 @@ import io.vertx.core.Handler;
 public interface ArangoClientBaseDocument {
 
     public void insertDocument(String collectionName, VertxBaseDocument baseDocument,
-                               Handler<AsyncResult<DocumentInsertResult>> resultHandler);
+                               Handler<AsyncResult<VertxDocumentCreateEntity>> resultHandler);
 
     public void insertDocument(String collectionName, VertxBaseDocument baseDocument, VertxDocumentCreateOptions createOptions,
-                               Handler<AsyncResult<DocumentInsertResult>> resultHandler);
+                               Handler<AsyncResult<VertxDocumentCreateEntity>> resultHandler);
 
     public void insertDocuments(String collectionName, VertxCollection values,
                                 Handler<AsyncResult<VertxMultiDocumentEntity>> resultHandler);
@@ -35,4 +34,6 @@ public interface ArangoClientBaseDocument {
     public void getDocuments(String collectionName, String key, VertxDocumentReadOptions options,
                              Handler<AsyncResult<VertxMultiDocumentEntity>> resultHandler);
 
+    public void replaceDocument(String collectionName, String key, VertxBaseDocument document,
+                                Handler<AsyncResult<VertxDocumentUpdateEntity>> resultHandler);
 }

@@ -6,18 +6,18 @@ import io.vertx.core.json.JsonObject;
 import java.util.Objects;
 
 @DataObject
-public class DocumentInsertResult {
+public class VertxDocumentCreateEntity {
     private final static String OLD_OBJECT = "old_object";
     private final static String NEW_OBJECT = "new_obejct";
 
     private VertxBaseDocument oldObject;
     private VertxBaseDocument newObject;
 
-    public DocumentInsertResult() {
+    public VertxDocumentCreateEntity() {
 
     }
 
-    public DocumentInsertResult(JsonObject json) {
+    public VertxDocumentCreateEntity(JsonObject json) {
         oldObject = new VertxBaseDocument(json.getJsonObject(OLD_OBJECT));
         newObject = new VertxBaseDocument(json.getJsonObject(NEW_OBJECT));
     }
@@ -50,10 +50,10 @@ public class DocumentInsertResult {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 
-        DocumentInsertResult documentInsertResult = (DocumentInsertResult) obj;
+        VertxDocumentCreateEntity vertxDocumentCreateEntity = (VertxDocumentCreateEntity) obj;
 
-        if (!Objects.equals(oldObject, documentInsertResult.oldObject)) return false;
-        return newObject.equals(documentInsertResult.newObject);
+        if (!Objects.equals(oldObject, vertxDocumentCreateEntity.oldObject)) return false;
+        return newObject.equals(vertxDocumentCreateEntity.newObject);
     }
 
     @Override

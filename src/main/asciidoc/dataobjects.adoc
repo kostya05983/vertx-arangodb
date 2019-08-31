@@ -1,17 +1,5 @@
 = Cheatsheets
 
-[[DocumentInsertResult]]
-== DocumentInsertResult
-
-
-[cols=">25%,25%,50%"]
-[frame="topbot"]
-|===
-^|Name | Type ^| Description
-|[[newObject]]`@newObject`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
-|[[oldObject]]`@oldObject`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
-|===
-
 [[VertxBaseDocument]]
 == VertxBaseDocument
 
@@ -36,6 +24,18 @@
 [frame="topbot"]
 |===
 ^|Name | Type ^| Description
+|===
+
+[[VertxDocumentCreateEntity]]
+== VertxDocumentCreateEntity
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[newObject]]`@newObject`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
+|[[oldObject]]`@oldObject`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
 |===
 
 [[VertxDocumentCreateOptions]]
@@ -97,6 +97,19 @@
 |[[catchException]]`@catchException`|`Boolean`|-
 |[[ifMatch]]`@ifMatch`|`String`|-
 |[[ifNoneMatch]]`@ifNoneMatch`|`String`|-
+|===
+
+[[VertxDocumentUpdateEntity]]
+== VertxDocumentUpdateEntity
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[newDocument]]`@newDocument`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
+|[[oldDocument]]`@oldDocument`|`link:dataobjects.html#VertxBaseDocument[VertxBaseDocument]`|-
+|[[oldNew]]`@oldNew`|`String`|-
 |===
 
 [[VertxErrorEntity]]
