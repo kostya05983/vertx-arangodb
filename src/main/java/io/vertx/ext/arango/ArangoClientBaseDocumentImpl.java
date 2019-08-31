@@ -5,6 +5,4 @@ import io.vertx.core.Handler;
 
 public class ArangoClientBaseDocumentImpl {
 
-
-
 }

@@ -16,4 +16,10 @@ public interface ArangoClientBaseDocument {
 
     public void insertDocuments(String collectionName, VertxCollection values,
                                 Handler<AsyncResult<VertxMultiDocumentEntity>> resultHandler);
+
+    public void importDocuments(String collectionName, VertxCollection values,
+                                Handler<AsyncResult<VertxDocumentImportEntity>> resultHandler);
+
+    public void importDocuments(String collectionName, VertxCollection values, VertxDocumentImportOptions options,
+                                Handler<AsyncResult<VertxDocumentImportEntity>> resultHandler);
 }

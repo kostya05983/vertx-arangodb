@@ -53,6 +53,38 @@
 |[[waitForSync]]`@waitForSync`|`Boolean`|-
 |===
 
+[[VertxDocumentImportEntity]]
+== VertxDocumentImportEntity
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[created]]`@created`|`Number (Integer)`|-
+|[[empty]]`@empty`|`Number (Integer)`|-
+|[[errors]]`@errors`|`Number (Integer)`|-
+|[[ignored]]`@ignored`|`Number (Integer)`|-
+|[[updated]]`@updated`|`Number (Integer)`|-
+|===
+
+[[VertxDocumentImportOptions]]
+== VertxDocumentImportOptions
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[complete]]`@complete`|`Boolean`|-
+|[[details]]`@details`|`Boolean`|-
+|[[fromPrefix]]`@fromPrefix`|`String`|-
+|[[onDuplicate]]`@onDuplicate`|`String`|-
+|[[overwrite]]`@overwrite`|`Boolean`|-
+|[[toPrefix]]`@toPrefix`|`String`|-
+|[[waitForSync]]`@waitForSync`|`Boolean`|-
+|===
+
 [[VertxErrorEntity]]
 == VertxErrorEntity
 
