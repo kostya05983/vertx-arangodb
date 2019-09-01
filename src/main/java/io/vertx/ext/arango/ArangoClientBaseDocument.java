@@ -3,6 +3,15 @@ package io.vertx.ext.arango;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
+import io.vertx.ext.arango.dataobjects.VertxDocumentCreateEntity;
+import io.vertx.ext.arango.dataobjects.VertxDocumentCreateOptions;
+import io.vertx.ext.arango.dataobjects.VertxDocumentImportEntity;
+import io.vertx.ext.arango.dataobjects.VertxDocumentImportOptions;
+import io.vertx.ext.arango.dataobjects.VertxDocumentReadOptions;
+import io.vertx.ext.arango.dataobjects.VertxDocumentReplaceOptions;
+import io.vertx.ext.arango.dataobjects.VertxDocumentUpdateEntity;
+import io.vertx.ext.arango.dataobjects.VertxMultiDocumentEntity;
+import io.vertx.ext.arango.dataobjects.VertxMultiUpdateEntity;
 
 
 @VertxGen

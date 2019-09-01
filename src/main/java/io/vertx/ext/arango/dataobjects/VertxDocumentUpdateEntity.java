@@ -1,7 +1,8 @@
-package io.vertx.ext.arango;
+package io.vertx.ext.arango.dataobjects;
 
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.arango.VertxBaseDocument;
 
 import java.util.Objects;
 

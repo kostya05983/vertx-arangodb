@@ -3,7 +3,7 @@ install: true
 
 jdk:
   - openjdk11
-script: mvn clean install
+script: ./gradlew build
 
 services:
   - docker
