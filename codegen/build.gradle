@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.3.50'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 repositories {
@@ -20,6 +20,7 @@ ext {
 }
 
 group = 'io.vertx'
+
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"

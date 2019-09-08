@@ -1,1 +1,3 @@
 rootProject.name = 'vertx-arangodb'
+include 'api'
+include 'codegen'

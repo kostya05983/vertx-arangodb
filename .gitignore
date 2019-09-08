@@ -45,5 +45,8 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-
+codegen/build/
+api/build/
+.gradle/
+build/
 

@@ -1,0 +1,9 @@
+name: DataObject
+data {
+    boolean waitForSync
+    boolean ignoreRevs
+    string ifMatch
+    boolean returnNew
+    boolean returnOld
+    boolean silent
+}
